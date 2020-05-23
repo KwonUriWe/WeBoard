@@ -15,53 +15,62 @@ import usr.Usr;
 
 public class UsrDAO {
 	//DB 연결
-	    private static UsrDAO instance = new UsrDAO();
-	    //.jsp페이지에서 DB연동빈인 BoardDBBean클래스의 메소드에 접근시 필요
-	    public static UsrDAO getInstance() {
-	        return instance;
-	    }
-	    private UsrDAO() {}
-		
-		private Connection getConnection() throws Exception {
-			Context initCtx= new InitialContext();
-			Context envCtx = (Context)initCtx.lookup("java:comp/env");
-			DataSource ds = (DataSource)envCtx.lookup("jdbc/oracledb");
-	    	return ds.getConnection();
-	    }
+    private static UsrDAO instance = new UsrDAO();
+    //.jsp페이지에서 DB연동빈인 BoardDBBean클래스의 메소드에 접근시 필요
+    public static UsrDAO getInstance() {
+        return instance;
+    }
+    private UsrDAO() {}
+	
+	private Connection getConnection() throws Exception {
+		Context initCtx= new InitialContext();
+		Context envCtx = (Context)initCtx.lookup("java:comp/env");
+		DataSource ds = (DataSource)envCtx.lookup("jdbc/oracledb");
+    	return ds.getConnection();
+    }
 	
 	//로그인
 	public int login(String usrId, String usrPasswd) {
 		Connection conn = null; 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;    
-		String sql = "select usrDelete from Usr where usrId = ? and usrPasswd = ?";
+		String sql = "select usrPasswd, usrDelete from Usr where usrId = ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, usrId);
-			pstmt.setString(2, usrPasswd);
 			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				if (rs.getInt("usrDelete")==0) {
-					return 1;		//로그인 성공
-				} else if (rs.getInt("usrDelete")==1) {
-					return 2;	//탈퇴계정
-				} 	
-			} else return 0;	//로그인 실패
+	    	if (!rs.next()) {
+	    		return -1;	//존재하지 않는 ID
+	    	} else {
+				closeDBResources(rs, pstmt);
+				sql = "select usrDelete from Usr where usrId = ? and usrPasswd = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, usrId);
+				pstmt.setString(2, usrPasswd);
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					if (rs.getInt(1)==0) {
+						return 1;		//로그인 성공
+					} else if (rs.getInt(1)==1) {
+						return 2;	//탈퇴계정
+					}
+				} else return 0;	//비밀번호, ID 오류
+			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			closeDBResources(rs, pstmt, conn);
 		}
-		return -1;	//DB오류
+		return -2;	//DB오류
 	}
 	
 	//회원가입
-	public int join(String usrId, String usrPasswd, String usrName, String usrGender, String usrEmail) {
+	public int join(String usrId, String usrPasswd, String usrEmail) {
 		Connection conn = null; 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;    
-		String sql = "select usrName from Usr where usrId = ?";
+		String sql = "select usrEmail from Usr where usrId = ?";
 	    try {
 	    	conn = getConnection();
 	    	pstmt = conn.prepareStatement(sql);
@@ -71,14 +80,12 @@ public class UsrDAO {
 	    		return 0;	//아이디 중복 오류
 	    	} else {
 	    		closeDBResources(pstmt);
-	    		sql = "insert into Usr (usrId, usrPasswd, usrName, usrGender, usrEmail, delDate) values (?, ?, ?, ?, ?, ?)";
+	    		sql = "insert into Usr (usrId, usrPasswd, usrEmail, delDate) values (?, ?, ?, ?)";
 	    		pstmt = conn.prepareStatement(sql);
 	    		pstmt.setString(1, usrId);
 	    		pstmt.setString(2, usrPasswd);
-	    		pstmt.setString(3, usrName);
-	    		pstmt.setString(4, usrGender);
-	    		pstmt.setString(5, usrEmail);
-	    		pstmt.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
+	    		pstmt.setString(3, usrEmail);
+	    		pstmt.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
 	    		return pstmt.executeUpdate();	//회원가입 요청
 	    	}
 		} catch (Exception e) {
@@ -104,8 +111,6 @@ public class UsrDAO {
 				Usr usr = new Usr();
 				usr.setUsrId(rs.getString("usrId"));
 				usr.setUsrPasswd(rs.getString("usrPasswd"));
-				usr.setUsrName(rs.getString("usrName"));
-				usr.setUsrGender(rs.getString("usrGender"));
 				usr.setUsrEmail(rs.getString("usrEmail"));
 				return usr;
 			}
@@ -121,15 +126,13 @@ public class UsrDAO {
 	public int update(Usr usr) {
 		Connection conn = null; 
 		PreparedStatement pstmt = null;
-		String sql = "update Usr set usrPasswd = ?, usrName = ?, usrGender = ?, usrEmail = ? where usrId = ?";
+		String sql = "update Usr set usrPasswd = ?, usrEmail = ? where usrId = ?";
 	    try {
 	    	conn = getConnection();
     		pstmt = conn.prepareStatement(sql);
     		pstmt.setString(1, usr.getUsrPasswd());
-    		pstmt.setString(2, usr.getUsrName());
-    		pstmt.setString(3, usr.getUsrGender());
-    		pstmt.setString(4, usr.getUsrEmail());
-    		pstmt.setString(5, usr.getUsrId());
+    		pstmt.setString(2, usr.getUsrEmail());
+    		pstmt.setString(3, usr.getUsrId());
     		return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -144,7 +147,7 @@ public class UsrDAO {
 		Connection conn = null; 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;    
-		String SQL = "select usrName from Usr where usrId = ? and usrPasswd = ?";
+		String SQL = "select usrEmail from Usr where usrId = ? and usrPasswd = ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -203,7 +206,7 @@ public class UsrDAO {
 		return -1;
 	}
 	
-	//회원 목록 보기
+	//전체 회원 목록 보기
 	public List<Usr> getUsrs(int start, int end) {
 		Connection conn = null; 
 		PreparedStatement pstmt = null;
@@ -222,8 +225,6 @@ public class UsrDAO {
 	            do {
 	            	Usr usr = new Usr();
 					usr.setUsrId(rs.getString("usrId"));
-					usr.setUsrName(rs.getString("usrName"));
-					usr.setUsrGender(rs.getString("usrGender"));
 					usr.setUsrEmail(rs.getString("usrEmail"));
 					usr.setUsrDelete(rs.getInt("usrDelete"));
 					usr.setDelDate(rs.getTimestamp("delDate"));
@@ -248,18 +249,17 @@ public class UsrDAO {
         	conn = getConnection();
             switch (option) {
 			case "usrId":
-                sql = "select count(*) from (select rowNum rnum, B.* from (select * from Usr where usrId like ? "
-                		+ "order by usrDelete asc, delDate desc) B) where rnum >= ? and rnum <= ?";
+                sql = "select count(*) from (select rowNum rnum, U.* from (select * from Usr where usrId like ? "
+                		+ "order by usrDelete asc, delDate desc) U) where rnum >= ? and rnum <= ?";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, "%" + searchWord + "%");
-                pstmt.setString(2, "%" + searchWord + "%");
-    	        pstmt.setInt(3, start);
-    			pstmt.setInt(4, end);
+    	        pstmt.setInt(2, start);
+    			pstmt.setInt(3, end);
     			break;
     			
-			case "usrName":
-                sql = "select count(*) from (select rowNum rnum, B.* from (select * from Usr where usrName like ? "
-                		+ "order by usrDelete asc, delDate desc) B) where rnum >= ? and rnum <= ?";
+			case "usrEmail":
+                sql = "select count(*) from (select rowNum rnum, U.* from (select * from Usr where usrEmail like ? "
+                		+ "order by usrDelete asc, delDate desc) U) where rnum >= ? and rnum <= ?";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, "%" + searchWord + "%");
                 pstmt.setInt(2, start);
@@ -289,17 +289,17 @@ public class UsrDAO {
         	conn = getConnection();
         	switch (option) {
 			case "usrId":
-                sql = "select * from (select rowNum rnum, B.* from (select * from Usr where usrId like ? "
-                		+ "order by usrDelete asc, delDate desc) B) where rnum >= ? and rnum <= ?";
+                sql = "select * from (select rowNum rnum, U.* from (select * from Usr where usrId like ? "
+                		+ "order by usrDelete asc, delDate desc) U) where rnum >= ? and rnum <= ?";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, "%" + searchWord + "%");
-    	        pstmt.setInt(3, start);
-    			pstmt.setInt(4, end);
+    	        pstmt.setInt(2, start);
+    			pstmt.setInt(3, end);
     			break;
     			
-			case "usrName":
-                sql = "select * from (select rowNum rnum, B.* from (select * from Usr where usrName like ? "
-                		+ "order by usrDelete asc, delDate desc) B) where rnum >= ? and rnum <= ?";
+			case "usrEmail":
+                sql = "select * from (select rowNum rnum, U.* from (select * from Usr where usrEmail like ? "
+                		+ "order by usrDelete asc, delDate desc) U) where rnum >= ? and rnum <= ?";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, "%" + searchWord + "%");
                 pstmt.setInt(2, start);
@@ -313,8 +313,6 @@ public class UsrDAO {
 	            do{
 	            	Usr usr = new Usr();
 					usr.setUsrId(rs.getString("usrId"));
-					usr.setUsrName(rs.getString("usrName"));
-					usr.setUsrGender(rs.getString("usrGender"));
 					usr.setUsrEmail(rs.getString("usrEmail"));
 					usr.setUsrDelete(rs.getInt("usrDelete"));
 					usr.setDelDate(rs.getTimestamp("delDate"));
@@ -366,6 +364,23 @@ public class UsrDAO {
 		if (conn != null) {
 			try {
 				conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void closeDBResources(ResultSet rs, PreparedStatement pstmt) {
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (pstmt != null) {
+			try {
+				pstmt.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -60,12 +60,12 @@
 					<tr>
 						<td colspan="2">
 							<select name="option" class="form-control">
-<%			if (bbsDAO.totalBbs(0)<6) {	%>
+<%			if (bbsDAO.totalBbs(1)<5) {	%>
 								<option value="notice" class="form-control" selected="selected">공지글</option>
 <%			}else{	 %>
 								<option value="notice" class="form-control" disabled>공지글 // 최대 5개 까지만 작성 가능합니다.</option>
 <%			}	%>
-								<option value="normal" class="form-control" selected="selected">일반글</option>
+								<option value="normal" class="form-control">일반글</option>
 							</select>
 						</td>
 					</tr>

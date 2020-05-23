@@ -1,5 +1,5 @@
-<!-- 수정 // 제목 클릭 확인-->
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="bbs.Bbs" %>
 <%@ page import="bbs.BbsDAO" %>
@@ -24,12 +24,16 @@
 <body>
 <%!
     BbsDAO bbsDAO = BbsDAO.getInstance();
-	int pageSize = 10;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 %>
 <%
 	if (session.getAttribute("usrId")!=null){
 		usrId = (String) session.getAttribute("usrId");
+	}
+
+	int pageSize = 10; 
+	if (request.getParameter("pageSize")!=null){
+		pageSize = Integer.parseInt(request.getParameter("pageSize"));
 	}
 
 	String option = request.getParameter("option");
@@ -42,7 +46,7 @@
 
     int currentPage = Integer.parseInt(pageNum);  // 1  // 2
     int startRow = (currentPage - 1) * pageSize + 1;  // 1  // 11
-    int endRow = currentPage * pageSize;  //10  //20
+    int endRow = currentPage * pageSize;  //s10  //20
     int totalBbs = 0;
     int totalNotice = 0;
     int number = 0;
@@ -73,6 +77,20 @@
     number = totalBbs-(currentPage-1)*pageSize;
 %>
 	<div class="container mt-5">
+		<div class="btn-group dropleft mb-2">
+			<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			    <span class="sr-only"></span>
+			  </button>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="bbsList.jsp?pageSize=5">5</a>
+				<a class="dropdown-item" href="bbsList.jsp?pageSize=10">10</a>
+				<a class="dropdown-item" href="bbsList.jsp?pageSize=20">20</a>
+				<a class="dropdown-item" href="bbsList.jsp?pageSize=40">40</a>
+			</div>
+			<button class="btn btn-outline-secondary btn-sm" type="button">
+				<%=pageSize%>씩 보기
+			</button>
+		</div>
 		<form method="post" action="bbsList.jsp">
 			<div class="input-group mb-3">
 			  <select class="custom-select" name="option" style="width: 10%">
@@ -112,7 +130,15 @@
 						<a href="bbsViewForm.jsp?bbsId=<%=bbs.getBbsId()%>&pageNum=<%=currentPage%>"><strong><%=bbs.getBbsTitle()%></strong></a> 
 					</td>
 					<td>
-						<a href="bbsList.jsp?option=usrId&searchWord=admin"><strong>관리자</strong></a>
+						<div class="dropdown">
+							<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<strong>관리자</strong>
+							</a>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+								<a class="dropdown-item" href="bbsList.jsp?option=usrId&searchWord=admin">게시글 보기</a>
+							    <a class="dropdown-item" href="mailto:<%=bbsDAO.writerEmail("admin")%>">이메일 보내기</a>
+							</div>
+						</div>
 					</td>
 					<td><strong><%=sdf.format(bbs.getBbsDate())%></strong></td>
 					<td><strong><%=bbs.getReadCount()%></strong></td>
@@ -147,7 +173,15 @@
 <%			}	%> 
 					</td>
 					<td>
-						<a href="bbsList.jsp?option=usrId&searchWord=<%=bbs.getUsrId()%>"><%=bbs.getUsrId()%></a>
+						<div class="dropdown">
+							<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<%=bbs.getUsrId()%>
+							</a>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+								<a class="dropdown-item" href="bbsList.jsp?option=usrId&searchWord=<%=bbs.getUsrId()%>">게시글 보기</a>
+							    <a class="dropdown-item" href="mailto:<%=bbsDAO.writerEmail(usrId)%>">이메일 보내기</a>
+							</div>
+						</div>
 					</td>
 					<td><%=sdf.format(bbs.getBbsDate())%></td>
 					<td><%=bbs.getReadCount()%></td>
@@ -204,7 +238,8 @@
 		</nav>
 		<a href="bbsWriteForm.jsp" class="btn btn-dark float-right">글쓰기</a>
 	</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="boot/js/bootstrap.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

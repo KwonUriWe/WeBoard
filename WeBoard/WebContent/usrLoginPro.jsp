@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="usr.UsrDAO" %>
 <%@ page import="java.io.PrintWriter" %>
 <%
@@ -44,6 +45,13 @@
 		script.println("</script>");
 	}
 	else if (result==-1){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('존재하지 않는 아이디 입니다.')");
+		script.println("history.back()");
+		script.println("</script>");
+	}
+	else if (result==-2){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('데이터베이스 오류가 발생하였습니다.')");

@@ -6,8 +6,6 @@ public class Usr {
 	
 	private String usrId;
 	private String usrPasswd;
-	private String usrName;
-	private String usrGender;
 	private String usrEmail;
 	private int usrDelete;
 	private Timestamp delDate;
@@ -23,18 +21,6 @@ public class Usr {
 	}
 	public void setUsrPasswd(String usrPasswd) {
 		this.usrPasswd = usrPasswd;
-	}
-	public String getUsrName() {
-		return usrName;
-	}
-	public void setUsrName(String usrName) {
-		this.usrName = usrName;
-	}
-	public String getUsrGender() {
-		return usrGender;
-	}
-	public void setUsrGender(String usrGender) {
-		this.usrGender = usrGender;
 	}
 	public String getUsrEmail() {
 		return usrEmail;

@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="usr.*" %>
 <%@ page import="java.io.PrintWriter" %>
 <%
@@ -27,7 +28,7 @@
 	String usrGender = request.getParameter("usrGender");  
 	String usrEmail = request.getParameter("usrEmail");
 	
-	if(usrId==null || usrPasswd==null || checkedPwd==null || usrName==null || usrGender==null || usrEmail==null){
+	if(usrId==null || usrPasswd==null || checkedPwd==null || usrEmail==null){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('입력되지 않은 항목이 있습니다.')");
@@ -42,10 +43,9 @@
 	} else {
 		usr.setUsrId(usrId);
 		usr.setUsrPasswd(usrPasswd);
-		usr.setUsrName(usrName);
-		usr.setUsrGender(usrGender);
 		usr.setUsrEmail(usrEmail);
 		int result = usrDAO.update(usr);
+		
 		if (result==-1){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");

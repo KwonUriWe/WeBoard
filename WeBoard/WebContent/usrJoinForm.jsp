@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="usr.UsrDAO" %>
 <%@ page import="java.io.PrintWriter" %>
 <% request.setCharacterEncoding("UTF-8"); %>
@@ -40,24 +41,16 @@
 						<input type="password" class="form-control" name="checkedPwd" maxlength="20" placeholder="비밀번호 확인">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="이름" name="usrName" maxlength="20">
-					</div>
-					<div class="form-group" style="text-align: center;">
-						<div class="btn-group btn-group-toggle" data-toggle="buttons">
-							<label class="btn btn-dark active">
-								<input type="radio" name="usrGender" value="여자" checked="checked">여자
-							</label>
-							<label class="btn btn-dark active">
-								<input type="radio" name="usrGender" value="남자">남자
-							</label>
-						</div>
-					</div>
-					<div class="form-group">
 						<input type="email" class="form-control" placeholder="이메일" name="usrEmail" maxlength="20">
 					</div>
 					<input type="submit" class="btn btn-dark form-control" value="회원가입">
 				</form>
 			</div> 
+			<div class="alert alert-secondary" role="alert">
+			  	아이디는 변경할 수 없습니다.
+			  	<br>
+			  	신중하게 선택해 주세요.
+			</div>
 		</div>
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

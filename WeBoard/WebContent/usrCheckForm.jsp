@@ -28,10 +28,14 @@
 	String where = request.getParameter("where");
 %>
 	<div class="container mt-5">
-		<div class="col-lg-4" style="float:none; margin:0 auto">
+		<div class="col-lg-5" style="float:none; margin:0 auto">
 			<div class="jumbotron bg-transparent" >
 				<form method="post" action="usrCheckPro.jsp">
-					<h3 style="text-align:center;">비밀번호 확인</h3>
+<%	if (where.equals("del")) {	%>
+					<h3 style="text-align:center;">탈퇴 전 비밀번호 확인</h3>
+<%	} else { %>
+					<h3 style="text-align:center;">수정 전 비밀번호 확인</h3>
+<%	} %>
 					<br>
 					<div class="form-group">
 						<input type="text" class="form-control" value=<%= usrId %> name="usrId" maxlength="20">
@@ -43,6 +47,15 @@
 					<input type="hidden" name="where" value="<%=where%>"> 
 				</form>
 			</div> 
+<%	if (where.equals("del")) {	%>
+			<div class="alert alert-secondary" role="alert">
+			  	탈퇴하더라도 게시글은 유지됩니다.
+			  	<br>
+			  	원치 않으시면 탈퇴 전에 삭제해 주세요.
+			  	<hr>
+			  	탈퇴요청된 계정은 30일 뒤 최종 삭제됩니다.
+			</div>
+<%	} %>
 		</div>
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

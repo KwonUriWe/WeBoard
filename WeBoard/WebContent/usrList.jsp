@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="usr.*" %>
 <%@ page import="java.io.PrintWriter" %>
 <%@page import="java.util.List"%>
@@ -46,28 +47,51 @@
 	    if (pageNum == null) {
 	        pageNum = "1";
 	    }
+	    
+	    String option = request.getParameter("option");
+		String searchWord = request.getParameter("searchWord");
+		
 	    int currentPage = Integer.parseInt(pageNum);  // 1  // 2
 	    int startRow = (currentPage - 1) * pageSize + 1;  // 1  // 11
 	    int endRow = currentPage * pageSize;  //10  //20
-	    int totalUsr = usrDAO.getTotalUsr();
+	    int totalUsr = 0;
 	    int number = 0;
 	    List<Usr> usrList = null;
 	    
-	    if (totalUsr > 0) {
-	    	usrList = usrDAO.getUsrs(startRow, endRow);
-	    }
+	    if (option!=null && searchWord!=null){
+	    	totalUsr = usrDAO.totalSearch(option, searchWord, startRow, endRow);
+			if (totalUsr > 0) {
+				usrList = usrDAO.searchUsr(option, searchWord, startRow, endRow);
+		    }
+		}
+		else {
+			totalUsr = usrDAO.getTotalUsr();
+		    if (totalUsr > 0) {
+		    	usrList = usrDAO.getUsrs(startRow, endRow);
+		    }
+		}
 		number = totalUsr - (currentPage - 1) * pageSize;
 %>
 	<div class="container mt-5">
+		<form method="post" action="usrList.jsp">
+			<div class="input-group mb-3">
+			  <select class="custom-select" name="option" style="width: 10%">
+			    <option value="usrId" selected>아이디</option>
+			    <option value="usrEmail">이메일</option>
+			  </select>
+			  <input type="text" class="form-control" name="searchWord" style="width: 70%">
+			  <div class="input-group-append">
+			    <input class="btn btn-outline-secondary" type="submit" value="검색하기">
+			  </div>
+			</div>
+		</form>
 		<table class="table table-stripded" style="text-align: center; border: 1px solid #ddd">
 			<thead>
 				<tr>
-					<th style="width: 15%; text-align: center;">아이디</th>
-					<th style="width: 15%; text-align: center;">이름</th>
-					<th style="width: 10%; text-align: center;">성별</th>
-					<th style="width: 20%; text-align: center;">이메일</th>
+					<th style="width: 20%; text-align: center;">아이디</th>
+					<th style="width: 30%; text-align: center;">이메일</th>
 					<th style="width: 20%; text-align: center;">상태</th>
-					<th style="width: 20%; text-align: center;">가입/탈퇴일</th>
+					<th style="width: 30%; text-align: center;">가입/탈퇴일</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -85,8 +109,6 @@
 				}	%>
 				<tr>
 					<td><%=usrList.get(i).getUsrId()%></td>
-					<td><%=usrList.get(i).getUsrName()%></td>
-					<td><%=usrList.get(i).getUsrGender()%></td>
 					<td><%=usrList.get(i).getUsrEmail()%></td>
 					<td><%=del%></td>
 					<td><%=sdf.format(usrList.get(i).getDelDate())%></td>
@@ -141,7 +163,7 @@
 	}		%>
 			</ul>
 		</nav>
-		<a href="usrDelFinalPro.jsp" class="btn btn-dark pull-right">30일 전 탈퇴 회원 정보 삭제</a>
+		<a href="usrDelFinalPro.jsp" class="btn btn-dark float-right">30일 전 탈퇴 회원 정보 삭제</a>
 	</div>
 <%	}	%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

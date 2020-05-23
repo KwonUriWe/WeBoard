@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="usr.UsrDAO" %>
 <%@ page import="java.io.PrintWriter" %>
 <%
@@ -16,7 +17,7 @@
 <%
 		
 	String checkedPwd = request.getParameter("checkedPwd");
-	if(usr.getUsrId()==null || usr.getUsrPasswd()==null || checkedPwd==null || usr.getUsrName()==null || usr.getUsrGender()==null || usr.getUsrEmail()==null){
+	if(usr.getUsrId()==null || usr.getUsrPasswd()==null || checkedPwd==null || usr.getUsrEmail()==null){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('입력되지 않은 항목이 있습니다.')");
@@ -30,7 +31,7 @@
 		script.println("</script>");
 	} else {
 		UsrDAO usrDAO = UsrDAO.getInstance();
-		int result = usrDAO.join(usr.getUsrId(), usr.getUsrPasswd(), usr.getUsrName(), usr.getUsrGender(), usr.getUsrEmail());
+		int result = usrDAO.join(usr.getUsrId(), usr.getUsrPasswd(), usr.getUsrEmail());
 		
 		if (result==0){
 			PrintWriter script = response.getWriter();

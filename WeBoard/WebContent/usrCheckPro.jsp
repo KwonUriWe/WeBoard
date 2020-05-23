@@ -17,7 +17,7 @@
 <%
 	String usrId = request.getParameter("usrId");
 	String usrPasswd = request.getParameter("usrPasswd");
-	String where = request.getParameter("where");;
+	String where = request.getParameter("where");
 	UsrDAO usrDAO = UsrDAO.getInstance();
 
 	int check = usrDAO.checkPwd(usrId, usrPasswd);

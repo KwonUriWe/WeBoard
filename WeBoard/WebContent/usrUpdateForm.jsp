@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="usr.*" %>
 <%@ page import="java.io.PrintWriter" %>
 <%
@@ -29,7 +30,7 @@
 	UsrDAO usrDAO = UsrDAO.getInstance();
 	Usr usr = usrDAO.getUsr(usrId);
 
-	if(usr.getUsrPasswd()==null || usr.getUsrName()==null || usr.getUsrGender()==null || usr.getUsrEmail()==null){
+	if(usr.getUsrPasswd()==null || usr.getUsrEmail()==null){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('로그인 후 수정 가능합니다.')");
@@ -53,24 +54,14 @@
 						<input type="password" class="form-control" name="checkedPwd" maxlength="20" placeholder="비밀번호 확인">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" name="usrName" maxlength="20" value="<%= usr.getUsrName() %>">
-					</div>
-					<div class="form-group" style="text-align: center;">
-						<div class="btn-group btn-group-toggle" data-toggle="buttons">
-							<label class="btn btn-dark <% if(usr.getUsrGender().equals("여자")){%>active focus<%}%>">
-								<input type="radio" name="usrGender" autocomplete="off" value="여자" <% if(usr.getUsrGender().equals("여자")){%>checked="checked"<%}%>>여자
-							</label>
-							<label class="btn btn-dark <% if(usr.getUsrGender().equals("남자")){%>active focus<%}%>">
-								<input type="radio" name="usrGender" value="남자" <% if(usr.getUsrGender().equals("남자")){%>checked="checked"<%}%>>남자
-							</label>
-						</div>
-					</div>
-					<div class="form-group">
 						<input type="email" class="form-control" name="usrEmail" maxlength="20" value="<%= usr.getUsrEmail() %>">
 					</div>
 					<input type="submit" class="btn btn-dark form-control" value="수정하기">
 				</form>
 			</div> 
+			<div class="alert alert-secondary" role="alert">
+			  	아이디는 변경할 수 없습니다.
+			</div>
 		</div>
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

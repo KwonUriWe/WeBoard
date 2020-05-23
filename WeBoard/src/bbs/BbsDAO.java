@@ -234,10 +234,10 @@ public class BbsDAO {
 		Connection conn = null; 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;    
-		String SQL = "select notice from Bbs where bbsId = ? and notice = 1";
+		String sql = "select notice from Bbs where bbsId = ? and notice = 1";
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bbsId);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -249,6 +249,30 @@ public class BbsDAO {
 			closeDBResources(rs, pstmt, conn);
 		}
 		return -1;	//DB오류
+	}
+	
+	//작성자의 이메일 주소 추출
+	public String writerEmail(String usrId) {
+		Connection conn = null; 
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String email = "데이터베이스 오류가 발생하였습니다.";
+		String sql = "select usrEmail from Usr where usrId = ?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, usrId);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				email = rs.getString(1);
+				return email;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeDBResources(rs, pstmt, conn);
+		}
+		return email;
 	}
 	
 	//글 쓰기

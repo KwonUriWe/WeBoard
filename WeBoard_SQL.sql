@@ -11,22 +11,12 @@ bbsCONTENT VARCHAR2(3000) NOT NULL,
 notice number(2) NOT NULL,
 filename VARCHAR2(75));
 
-drop table bbs;
-select * from bbs;
-
-
 CREATE TABLE USR
 (
 usrId VARCHAR(20) PRIMARY KEY,
 usrPasswd VARCHAR2(20),
-usrName VARCHAR2(20),
-usrGender VARCHAR2(20),
 usrEmail VARCHAR2(20),
 usrDelete NUMBER(2),
 delDate TIMESTAMP);
-
-drop table usr;
-select * from usr;
-
 
 commit;
