@@ -19,16 +19,17 @@
 	<div class="container mt-5">
 		<div class="jumbotron bg-transparent">
 			<div class="container">
-<%	if (usrId==null){	%>
-				<h2>들어가기</h2>
-				<br>
-				<a class="btn btn-dark btn-pull mb-2" href="usrLoginForm.jsp" role="button" style="width: 100%;">로그인</a>
-				<a class="btn btn-dark btn-pull" href="usrJoinForm.jsp" role="button" style="width: 100%;">회원가입</a>
-<%	} else if (usrId.equals("admin")){	%>
+<%	if (usrId==null){	
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('로그인 후 이용 가능합니다.')");
+		script.println("location.href='usrLoginForm.jsp'");
+		script.println("</script>");
+} else if (usrId.equals("admin")){	%>
 				<h2>관리자용 계정관리</h2>
 				<br>
-				<a class="btn btn-dark btn-pull mb-2" href="usrList.jsp" role="button" style="width: 100%;">회원 정보 관리</a>
-				<a class="btn btn-dark btn-pull" href="usrLogoutPro.jsp" role="button" style="width: 100%;">로그아웃</a>
+				<a class="btn btn-success btn-pull mb-2" href="usrList.jsp" role="button" style="width: 100%;">회원 정보 관리</a>
+				<a class="btn btn-success btn-pull" href="usrLogoutPro.jsp" role="button" style="width: 100%;">로그아웃</a>
 <%	} else {	%>
 				<h2><%= usrId %>님의 계정관리</h2>
 				<br>

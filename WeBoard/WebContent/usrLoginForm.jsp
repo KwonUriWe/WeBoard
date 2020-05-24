@@ -27,7 +27,7 @@
 	}	
 %>
 	<div class="container mt-5">
-		<div class="col-lg-4" style="float:none; margin:0 auto">
+		<div class="col-lg-5" style="float:none; margin:0 auto">
 			<div class="jumbotron bg-transparent" >
 				<form method="post" name="usrWriteform" action="usrLoginPro.jsp" onsubmit="return usrSave(this);">
 					<h3 style="text-align:center;">로그인</h3>

@@ -57,7 +57,7 @@
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('계정정보가 수정되었습니다.')");
-		script.println("location.href='usrMain.jsp'");
+		script.println("location.href='index.jsp'");
 		script.println("</script>");
 		}
 	}

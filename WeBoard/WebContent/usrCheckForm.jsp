@@ -21,7 +21,7 @@
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('로그인 후 이용 가능합니다.')");
-		script.println("location.href='usrMain.jsp'");
+		script.println("location.href='usrLoginForm.jsp'");
 		script.println("</script>");
 	}
 	

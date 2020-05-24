@@ -26,7 +26,7 @@
 	}	
 %>
 	<div class="container mt-5">
-		<div class="col-lg-4" style="float:none; margin:0 auto">
+		<div class="col-lg-5" style="float:none; margin:0 auto">
 			<div class="jumbotron bg-transparent" >
 				<form class="form-horizontal" method="post" action="usrJoinPro.jsp">
 					<h3 style="text-align:center;">회원가입 화면</h3>

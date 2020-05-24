@@ -33,7 +33,7 @@
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('관리자 계정으로 로그인 후 확인 가능합니다.')");
-		script.println("location.href='usrLoginForm.jsp'");
+		script.println("location.href='index.jsp'");
 		script.println("</script>");
 	} else {
 %>
@@ -109,7 +109,7 @@
 				}	%>
 				<tr>
 					<td><%=usrList.get(i).getUsrId()%></td>
-					<td><%=usrList.get(i).getUsrEmail()%></td>
+					<td><a class="dropdown-item" href="mailto:<%=usrList.get(i).getUsrEmail()%>"><%=usrList.get(i).getUsrEmail()%></a></td>
 					<td><%=del%></td>
 					<td><%=sdf.format(usrList.get(i).getDelDate())%></td>
 				</tr>

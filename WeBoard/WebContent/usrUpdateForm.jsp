@@ -23,7 +23,7 @@
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('로그인 후 수정 가능합니다.')");
-		script.println("location.href='usrMain.jsp'");
+		script.println("location.href='usrLoginForm.jsp'");
 		script.println("</script>");
 	}
 
@@ -34,12 +34,12 @@
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('로그인 후 수정 가능합니다.')");
-		script.println("location.href='usrMain.jsp'");
+		script.println("location.href='usrLoginForm.jsp'");
 		script.println("</script>");
 	}
 %>
 	<div class="container mt-5">
-		<div class="col-lg-4" style="float:none; margin:0 auto">
+		<div class="col-lg-5" style="float:none; margin:0 auto">
 			<div class="jumbotron bg-transparent" >
 				<form method="post" action="usrUpdatePro.jsp">
 					<h3 style="text-align:center;"><%= usrId %>님의 정보</h3>
