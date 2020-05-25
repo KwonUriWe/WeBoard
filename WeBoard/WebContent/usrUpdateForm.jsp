@@ -29,14 +29,6 @@
 
 	UsrDAO usrDAO = UsrDAO.getInstance();
 	Usr usr = usrDAO.getUsr(usrId);
-
-	if(usr.getUsrPasswd()==null || usr.getUsrEmail()==null){
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('로그인 후 수정 가능합니다.')");
-		script.println("location.href='usrLoginForm.jsp'");
-		script.println("</script>");
-	}
 %>
 	<div class="container mt-5">
 		<div class="col-lg-5" style="float:none; margin:0 auto">

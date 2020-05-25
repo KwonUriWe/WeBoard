@@ -12,7 +12,6 @@
 <body>
 <%
 	session.removeAttribute("usrId");
-	//session.invalidate();
 
 	PrintWriter script = response.getWriter();
 	script.println("<script>");

@@ -51,11 +51,10 @@
 	    String option = request.getParameter("option");
 		String searchWord = request.getParameter("searchWord");
 		
-	    int currentPage = Integer.parseInt(pageNum);  // 1  // 2
-	    int startRow = (currentPage - 1) * pageSize + 1;  // 1  // 11
-	    int endRow = currentPage * pageSize;  //10  //20
+	    int currentPage = Integer.parseInt(pageNum);
+	    int startRow = (currentPage - 1) * pageSize + 1;
+	    int endRow = currentPage * pageSize;
 	    int totalUsr = 0;
-	    int number = 0;
 	    List<Usr> usrList = null;
 	    
 	    if (option!=null && searchWord!=null){
@@ -70,7 +69,6 @@
 		    	usrList = usrDAO.getUsrs(startRow, endRow);
 		    }
 		}
-		number = totalUsr - (currentPage - 1) * pageSize;
 %>
 	<div class="container mt-5">
 		<form method="post" action="usrList.jsp">

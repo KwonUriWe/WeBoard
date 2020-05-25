@@ -20,17 +20,18 @@
 	if(session.getAttribute("usrId")!=null) {
 		usrId = (String) session.getAttribute("usrId");
 	}
+	
 	UsrDAO usrDAO = UsrDAO.getInstance();
 	int result = usrDAO.login(usr.getUsrId(), usr.getUsrPasswd());
 	
- 	if (result==1){
+		if (result==1){
 		session.setAttribute("usrId", usr.getUsrId());
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("location.href='index.jsp'");
 		script.println("</script>");
 	}
- 	if (result==2){
+		if (result==2){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('탈퇴 요청된 계정입니다.')");
@@ -45,13 +46,6 @@
 		script.println("</script>");
 	}
 	else if (result==-1){
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('존재하지 않는 아이디 입니다.')");
-		script.println("history.back()");
-		script.println("</script>");
-	}
-	else if (result==-2){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('데이터베이스 오류가 발생하였습니다.')");

@@ -34,35 +34,26 @@ public class UsrDAO {
 		Connection conn = null; 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;    
-		String sql = "select usrPasswd, usrDelete from Usr where usrId = ?";
+		String sql = "select usrDelete from Usr where usrId = ? and usrPasswd = ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, usrId);
+			pstmt.setString(2, usrPasswd);
 			rs = pstmt.executeQuery();
-	    	if (!rs.next()) {
-	    		return -1;	//존재하지 않는 ID
-	    	} else {
-				closeDBResources(rs, pstmt);
-				sql = "select usrDelete from Usr where usrId = ? and usrPasswd = ?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, usrId);
-				pstmt.setString(2, usrPasswd);
-				rs = pstmt.executeQuery();
-				if (rs.next()) {
-					if (rs.getInt(1)==0) {
-						return 1;		//로그인 성공
-					} else if (rs.getInt(1)==1) {
-						return 2;	//탈퇴계정
-					}
-				} else return 0;	//비밀번호, ID 오류
-			}
+			if (rs.next()) {
+				if (rs.getInt("usrDelete")==0) {
+					return 1;		//로그인 성공
+				} else if (rs.getInt("usrDelete")==1) {
+					return 2;	//탈퇴계정
+				} 	
+			} else return 0;	//로그인 실패
 		}catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			closeDBResources(rs, pstmt, conn);
 		}
-		return -2;	//DB오류
+		return -1;	//DB오류
 	}
 	
 	//회원가입
@@ -80,7 +71,8 @@ public class UsrDAO {
 	    		return 0;	//아이디 중복 오류
 	    	} else {
 	    		closeDBResources(pstmt);
-	    		sql = "insert into Usr (usrId, usrPasswd, usrEmail, delDate) values (?, ?, ?, ?)";
+	    		sql = "insert into Usr (usrId, usrPasswd, usrEmail, delDate) "
+	    				+ "values (?, ?, ?, ?)";
 	    		pstmt = conn.prepareStatement(sql);
 	    		pstmt.setString(1, usrId);
 	    		pstmt.setString(2, usrPasswd);
@@ -214,7 +206,9 @@ public class UsrDAO {
 		List<Usr> usrList = null;
 		try {
 			conn = getConnection();
-			String sql = "select * from (select rowNum rnum, B.* from (select * from Usr order by usrDelete asc, delDate desc) B) where rnum >= ? and rnum <= ?";
+			String sql = "select * from (select rowNum rnum, B.* from "
+					+ "(select * from Usr order by usrDelete asc, delDate desc) B) "
+					+ "where rnum >= ? and rnum <= ?";
 		    pstmt = conn.prepareStatement(sql);
 		    pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
