@@ -24,15 +24,14 @@
 	if(session.getAttribute("usrId")!=null) {
 		usrId = (String) session.getAttribute("usrId");
 	}
-	if(usrId==null) {
+	if(usrId==null || !usrId.equals("admin")) {
 		session.setAttribute("usrId", usr.getUsrId());
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('관리자 계정으로 로그인 후 확인 가능합니다.')");
-		script.println("location.href='usrMain.jsp'");
+		script.println("location.href='index.jsp'");
 		script.println("</script>");
-	} 
-	else if (usrId.equals("admin")) {
+	} else {
 		int result = usrDAO.deleteFinal(usrId);
 
 		if (result==-1){
@@ -49,13 +48,6 @@
 			script.println("location.href='usrList.jsp'");
 			script.println("</script>");
 		}
-	} else {
-		session.setAttribute("usrId", usr.getUsrId());
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('관리자 계정으로 로그인 후 확인 가능합니다.')");
-		script.println("location.href='usrLoginForm.jsp'");
-		script.println("</script>");
 	}
 %>
 </body>

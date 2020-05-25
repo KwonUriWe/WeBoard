@@ -72,7 +72,17 @@
 						<td colspan="2"><textarea class="form-control" name="bbsContent" maxlength="3000" style="height: 350px;"><%=bbs.getBbsContent()%></textarea></td>
 					</tr>
 					<tr>
-						<td><input type="file" name="selectfile" style="ime-mode:active;"></td>
+						<td>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+								</div>
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" name="selectfile">
+									<label class="custom-file-label" for="filename"></label>
+								</div>
+							</div>
+						</td>
 <%	String filename = bbs.getFileName();
 	if( filename !=null && !filename.equals("")) { %>
 								<td>기 업로드 된 파일 : <%=filename %></td>
