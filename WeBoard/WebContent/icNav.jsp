@@ -5,7 +5,7 @@
 		usrId = (String) session.getAttribute("usrId");
 	}
 %>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
 	<div class="container-xl">
 		<a class="navbar-brand font-weight-bolder" href="index.jsp" >우리 Board</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation">

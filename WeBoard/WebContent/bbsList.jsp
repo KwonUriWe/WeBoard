@@ -99,7 +99,7 @@
 			    <option value="bbsContent">내용</option>
 			    <option value="usrId">작성자</option>
 			  </select>
-			  <input type="text" class="form-control" placeholder="특수문자 X, 한 단어만 입력 가능" name="searchWord" style="width: 70%">
+			  <input type="text" class="form-control" name="searchWord" placeholder="특수문자 X, 한 단어만 입력 가능" style="width: 70%">
 			  <div class="input-group-append">
 			    <input class="btn btn-outline-secondary" type="submit" value="검색하기">
 			  </div>
@@ -178,8 +178,14 @@
 								<%=bbs.getUsrId()%>
 							</a>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-								<a class="dropdown-item" href="bbsList.jsp?option=usrId&searchWord=<%=bbs.getUsrId()%>">게시글 보기</a>
-							    <a class="dropdown-item" href="mailto:<%=bbsDAO.writerEmail(usrId)%>">이메일 보내기</a>
+								<a 	class="dropdown-item" 
+									href="bbsList.jsp?option=usrId&searchWord=<%=bbs.getUsrId()%>">
+									게시글 보기
+								</a>
+							    <a  class="dropdown-item" 
+							        href="mailto:<%=bbsDAO.writerEmail(usrId)%>">
+							                  이메일 보내기
+							    </a>
 							</div>
 						</div>
 					</td>
@@ -207,7 +213,7 @@
         
         if (startPage > 10) { %>
 			<li class="page-item">
-				<a class="page-link text-dark" href="bbsList.jsp?pageNum=<%= startPage - 10 %>">&laquo;</a>
+				<a class="page-link text-dark" href="bbsList.jsp?pageNum=<%= startPage - 10 %>&pageSize=<%=pageSize%>">&laquo;</a>
 		    </li>
 <%      } else {	%>
         	<li class="page-item disabled">
@@ -221,11 +227,11 @@
         	} else {
         		active = "text-dark";
         	}	%>
-			<li class="page-item"><a class="page-link <%=active%>" href="bbsList.jsp?pageNum=<%= i %>"><%= i %></a></li>
+			<li class="page-item"><a class="page-link <%=active%>" href="bbsList.jsp?pageNum=<%= i %>&pageSize=<%=pageSize%>"><%= i %></a></li>
 <%      } 
         if (endPage < pageCount) {  %>
 			<li class="page-item">
-				<a class="page-link text-dark" href="bbsList.jsp?pageNum=<%= startPage + 10 %>">&raquo;</a>
+				<a class="page-link text-dark" href="bbsList.jsp?pageNum=<%= startPage + 10 %>&pageSize=<%=pageSize%>">&raquo;</a>
 		    </li>
 			
 <%		} else {	%>

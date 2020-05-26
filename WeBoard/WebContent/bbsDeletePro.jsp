@@ -9,7 +9,7 @@
 	int check = (int)request.getAttribute("check");
     if(check==1){
 %>
-	<meta http-equiv="Refresh" content="0;url=bbsList.jsp?pageNum=<%=pageNum%>">
+	<meta http-equiv="Refresh" content="0;url=bbsList.jsp">
 <%	}else{
  		PrintWriter script = response.getWriter();
 		script.println("<script>");

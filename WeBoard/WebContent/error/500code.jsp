@@ -10,6 +10,8 @@
 <title>500에러페이지</title>
 </head>
 <body>
-서비스 사용에 불편을...
+
+	   Internal Server Error 요청사항을 수행할 수 없습니다.
+
 </body>
 </html>

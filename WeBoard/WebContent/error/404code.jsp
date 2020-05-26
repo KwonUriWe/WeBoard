@@ -10,6 +10,8 @@
 <title>404에러페이지</title>
 </head>
 <body>
-요청하신페이지는 존재하지 않습니다.
+
+	  Not Found 페이지를 찾을 수 없습니다.
+	  
 </body>
 </html>

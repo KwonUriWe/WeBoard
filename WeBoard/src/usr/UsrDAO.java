@@ -325,7 +325,8 @@ public class UsrDAO {
 	public int deleteFinal(String usrId) {
 		Connection conn = null; 
 		PreparedStatement pstmt = null;
-		String sql = "delete from Usr where usrDelete = 1 and trunc(MONTHS_BETWEEN(SYSDATE, deldate)) >= 1";
+		String sql = "delete from Usr where usrDelete = 1 and "
+				+ "trunc(MONTHS_BETWEEN(SYSDATE, deldate)) >= 1";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -364,23 +365,6 @@ public class UsrDAO {
 		}
 	}
 
-	private void closeDBResources(ResultSet rs, PreparedStatement pstmt) {
-		if (rs != null) {
-			try {
-				rs.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		if (pstmt != null) {
-			try {
-				pstmt.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
 	private void closeDBResources(PreparedStatement pstmt, Connection conn) {
 		if (pstmt != null) {
 			try {

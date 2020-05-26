@@ -54,7 +54,6 @@
 			script.println("location.href='bbsList.jsp'");
 			script.println("</script>");
 		}
-		String pageNum = request.getParameter("pageNum");
 %>
 	<div class="container mt-5">
 		<form method="post" name="writeform" action="bbsUpdatePro.do" onsubmit="return writeSave(this);" enctype="multipart/form-data">
@@ -94,7 +93,6 @@
 			</table>
 			<input type="hidden" name="bbsId" value="<%=bbsId%>">
 			<input type="hidden" name="usrId" value="<%=usrId%>">
-			<input type="hidden" name="pageNum" value="<%=pageNum%>">
 			<input type="submit" class="btn btn-dark float-right" value="저장하기">
 			<input type="reset" class="btn btn-dark float-right mr-1" value="다시쓰기">
 			<a href="bbsList.jsp" class="btn btn-dark float-left">목록보기</a>

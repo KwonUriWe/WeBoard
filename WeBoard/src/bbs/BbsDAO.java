@@ -317,7 +317,8 @@ public class BbsDAO {
 				re_level = 0;				
 			}
 			closeDBResources(rs, pstmt);			
-			sql = "insert into Bbs (bbsId, usrId, bbsTitle, bbsDate, ref, re_step, re_level, bbsContent, notice, fileName) values (?,?,?,?,?,?,?,?,?,?)";
+			sql = "insert into Bbs (bbsId, usrId, bbsTitle, bbsDate, ref, re_step, "
+					+ "re_level, bbsContent, notice, fileName) values (?,?,?,?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, number);
             pstmt.setString(2, bbs.getUsrId());

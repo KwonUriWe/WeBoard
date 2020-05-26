@@ -29,15 +29,13 @@
 			usrId = (String) session.getAttribute("usrId");
 		}
 		int bbsId = 0;
-		String pageNum = null;
 		BbsDAO bbsDAO = BbsDAO.getInstance(); 
 		
-		if (request.getParameter("bbsId")!=null && (String)request.getParameter("pageNum")!=null) {
+		if (request.getParameter("bbsId")!=null) {
 			bbsId = Integer.parseInt(request.getParameter("bbsId"));
-			pageNum = (String)request.getParameter("pageNum");
 		}
 		
-		if (bbsId==0 && pageNum==null) {
+		if (bbsId==0) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('유효하지 않은 글입니다.')");
@@ -73,7 +71,9 @@
 				<tr>
 					<td style="width:20%;">글제목</td>
 					<!-- 특수문자나 공백 등이 추가될 경우 html기호와 구분이 되지 않아 제대로 출력이 되지 않을 수 있음. replaceAll로 내용을 치환해줌. -->
-					<td colspan="3"><%= bbs.getBbsTitle().replaceAll(" ", "&nbsp").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>") %></td>
+					<td colspan="3">
+						<%= bbs.getBbsTitle().replaceAll(" ", "&nbsp").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>") %>
+					</td>
 				</tr>
 				<tr>
 					<td>작성자</td>
@@ -102,15 +102,15 @@
 			</tbody>
 		</table>
 		<input type="hidden" name=filename value="<%=filename%>">
-		<a href="bbsList.jsp?pageNum=<%=pageNum%>" class="btn btn-dark float-left">글목록</a>
+		<a href="bbsList.jsp" class="btn btn-dark float-left">글목록</a>
 <%	/* 공지글일 경우 답글작성 불가 */
 	if (bbsDAO.checkNotice(bbsId)==0) {	%>
 		<a href="bbsWriteForm.jsp?bbsId=<%=bbsId%>&ref=<%=ref%>&re_step=<%=re_step%>&re_level=<%=re_level%>" class="btn btn-dark float-right">답글쓰기</a>
 <%	}
 	/* 작성자와 같은 UsrID로 접속할 경우 수정, 삭제 버튼 생성 */
 	if (usrId!=null && usrId.equals(bbs.getUsrId())) {	%>
-				<a href="bbsDeletePro.do?bbsId=<%=bbsId%>&pageNum=<%=pageNum%>&usrId=<%=usrId%>" class="btn btn-dark float-right mr-1" onclick="return confirm('게시글을 삭제하시겠습니까?')">삭제</a>
-				<a href="bbsUpdateForm.jsp?bbsId=<%=bbsId%>&pageNum=<%=pageNum%>" class="btn btn-dark float-right mr-1">수정</a>
+				<a href="bbsDeletePro.do?bbsId=<%=bbsId%>&usrId=<%=usrId%>" class="btn btn-dark float-right mr-1" onclick="return confirm('게시글을 삭제하시겠습니까?')">삭제</a>
+				<a href="bbsUpdateForm.jsp?bbsId=<%=bbsId%>" class="btn btn-dark float-right mr-1">수정</a>
 <%	}	%>
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
