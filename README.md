@@ -6,22 +6,22 @@
 #### index
 - 메인페이지는 자주 수정될 수 있기 때문에 수월한 버전 관리를 위해 별도의 메인페이지를 작성하여 index에는 메인페이지를 호출하는 코드만 작성하도록 한다.
 - 로그인 여부 및 로그인된 계정에 따라 GNB의 버튼 내용이 달라지도록 한다.
-  - 비 로그인 상태
+  + 비 로그인 상태
+  ![K-001](https://user-images.githubusercontent.com/59382990/82868520-bb3ce700-9f67-11ea-86b5-d89a7ba690c9.jpg)
+  + 관리자 계정으로 로그인한 상태
+  ![K-002](https://user-images.githubusercontent.com/59382990/82868521-bc6e1400-9f67-11ea-87de-38660a1278d6.jpg)
+  + 일반 사용자 계정으로 로그인한 상태
+  ![K-003](https://user-images.githubusercontent.com/59382990/82868523-bd06aa80-9f67-11ea-974c-9b720c4bc978.jpg)
   
-  - 관리자 계정으로 로그인한 상태
-  
-  - 일반 사용자 계정으로 로그인한 상태
-  
-
 ### 계정 관련
   
 ### 계정 관리 화면
 - 로그인 후 진입이 가능하다.
 - 로그인된 계정에 따라 Contents에 표시되는 버튼이 달라지도록 한다.
   - 관리자 계정으로 로그인한 상태
-  
+  ![K-004](https://user-images.githubusercontent.com/59382990/82869255-e6740600-9f68-11ea-9904-0e32d5a1114b.jpg)
   - 일반 사용자 계정으로 로그인한 상태
-  
+  ![K-005](https://user-images.githubusercontent.com/59382990/82869260-e83dc980-9f68-11ea-818d-65987c283771.jpg)
 
 #### 로그인
 - 비 로그인 상태에서만 진입이 가능하다.
