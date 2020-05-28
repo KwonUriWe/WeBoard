@@ -10,7 +10,7 @@
   ![K-001](https://user-images.githubusercontent.com/59382990/82868520-bb3ce700-9f67-11ea-86b5-d89a7ba690c9.jpg)
   + 관리자 계정으로 로그인한 상태
   ![K-002](https://user-images.githubusercontent.com/59382990/82868521-bc6e1400-9f67-11ea-87de-38660a1278d6.jpg)
-  + 일반 사용자 계정으로 로그인한 상태
+  + 일반 사용자(we) 계정으로 로그인한 상태
   ![K-003](https://user-images.githubusercontent.com/59382990/82868523-bd06aa80-9f67-11ea-974c-9b720c4bc978.jpg)
   
 ### 계정 관련
@@ -20,7 +20,7 @@
 - 로그인된 계정에 따라 Contents에 표시되는 버튼이 달라지도록 한다.
   - 관리자 계정으로 로그인한 상태
   ![K-004](https://user-images.githubusercontent.com/59382990/82869255-e6740600-9f68-11ea-9904-0e32d5a1114b.jpg)
-  - 일반 사용자 계정으로 로그인한 상태
+  - 일반 사용자(we) 계정으로 로그인한 상태
   ![K-005](https://user-images.githubusercontent.com/59382990/82869260-e83dc980-9f68-11ea-818d-65987c283771.jpg)
 
 #### 로그인
