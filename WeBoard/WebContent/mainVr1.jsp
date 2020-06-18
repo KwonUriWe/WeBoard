@@ -8,7 +8,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="boot/css/bootstrap.css">
 
-<!-- 확인하기_폰트 스타일 안먹음 -->
 <link rel="stylesheet" href="custom.css">
 
 <title>우리 게시판</title>
